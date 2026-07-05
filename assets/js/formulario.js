@@ -1,22 +1,3 @@
-/* ==========================================================================
-   FORMULARIO.JS — Confirmación de asistencia (RSVP)
-   --------------------------------------------------------------------------
-   - Muestra/oculta los campos de "Persona 2, 3, 4" según la cantidad
-     de personas elegida (máximo 4, definido en configuracion.json).
-   - Valida los campos antes de enviar.
-   - Envía los datos al Google Apps Script (que los guarda en Sheets).
-   - Muestra una animación de éxito + confeti y redirige a gracias.html.
-
-   NOTA SOBRE EL ENVÍO A GOOGLE APPS SCRIPT:
-   Los Web Apps de Apps Script no siempre devuelven encabezados CORS,
-   por lo que este archivo envía la petición en modo "no-cors". Esto
-   significa que NO podemos leer la respuesta del servidor desde el
-   navegador (es una limitación de seguridad de los navegadores, no
-   un error nuestro). Por eso, si el envío no lanza una excepción de
-   red, lo tratamos como éxito. El registro real siempre lo puedes
-   verificar abriendo tu Google Sheet.
-   ========================================================================== */
-
 window.InvitacionFormulario = (function () {
   const MAX_PERSONAS_ABSOLUTO = 4;
 
@@ -24,27 +5,26 @@ window.InvitacionFormulario = (function () {
     const formulario = document.getElementById('formulario-rsvp');
     if (!formulario) return;
 
-    const maximoPersonas = Math.min(config.confirmacion.maximoPersonas || 4, MAX_PERSONAS_ABSOLUTO);
     const selectCantidad = document.getElementById('form-cantidad');
     const estadoFormulario = document.getElementById('formulario-estado');
+    const maximoPersonas = Math.min(config.confirmacion.maximoPersonas || 4, MAX_PERSONAS_ABSOLUTO);
 
     prepararSelectCantidad(selectCantidad, maximoPersonas);
     actualizarCamposPersonas(1);
 
-    selectCantidad.addEventListener('change', (evento) => {
-      actualizarCamposPersonas(parseInt(evento.target.value, 10));
+    selectCantidad.addEventListener('change', (e) => {
+      actualizarCamposPersonas(parseInt(e.target.value, 10));
     });
 
-    formulario.addEventListener('submit', (evento) => {
-      evento.preventDefault();
+    formulario.addEventListener('submit', (e) => {
+      e.preventDefault();
       manejarEnvio(formulario, config, estadoFormulario);
     });
   }
 
-  /** Genera las opciones del select de 1 hasta el máximo configurado */
   function prepararSelectCantidad(select, maximo) {
-    if (!select) return;
     select.innerHTML = '';
+
     for (let i = 1; i <= maximo; i++) {
       const opcion = document.createElement('option');
       opcion.value = String(i);
@@ -53,28 +33,30 @@ window.InvitacionFormulario = (function () {
     }
   }
 
-  /** Muestra los campos de persona 1..N y oculta el resto */
   function actualizarCamposPersonas(cantidad) {
     document.querySelectorAll('.campo-persona').forEach((campo) => {
       const numero = parseInt(campo.dataset.persona, 10);
       const visible = numero <= cantidad;
       campo.classList.toggle('visible', visible);
+
       const input = campo.querySelector('input');
-      if (input) input.required = visible;
-      if (!visible && input) input.value = '';
+      if (input) {
+        input.required = visible;
+        if (!visible) input.value = '';
+      }
     });
   }
 
-  /** Valida los campos visibles del formulario. Devuelve true si todo está correcto. */
   function validarFormulario(formulario) {
     let valido = true;
 
     formulario.querySelectorAll('.campo').forEach((campo) => {
       const input = campo.querySelector('input[required], select[required]');
       if (!input) return;
-      const esValido = input.value.trim().length > 0;
-      campo.classList.toggle('con-error', !esValido);
-      if (!esValido) valido = false;
+
+      const ok = input.value.trim().length > 0;
+      campo.classList.toggle('con-error', !ok);
+      if (!ok) valido = false;
     });
 
     return valido;
@@ -82,44 +64,59 @@ window.InvitacionFormulario = (function () {
 
   async function manejarEnvio(formulario, config, elementoEstado) {
     if (!validarFormulario(formulario)) {
-      mostrarEstado(elementoEstado, 'Por favor completa los campos marcados en rojo.', 'error');
+      mostrarEstado(elementoEstado, 'Completa los campos marcados.', 'error');
       return;
     }
 
-    const botonEnviar = formulario.querySelector('button[type="submit"]');
-    botonEnviar.disabled = true;
-    botonEnviar.textContent = 'Enviando...';
+    const urlDestino = "https://script.google.com/macros/s/AKfycby0ow0RTwxofdEfXaJL43Y5yu3jaQJe2GcQMjfl1XzHPmiDzyHsJ8Hoh5-Pf8UMIQ/exec";
 
-    const datosFormulario = new FormData(formulario);
-    const ahora = new Date();
-    datosFormulario.append('fecha', ahora.toLocaleDateString('es-MX'));
-    datosFormulario.append('hora', ahora.toLocaleTimeString('es-MX'));
-    datosFormulario.append('userAgent', navigator.userAgent);
-
-    try {
-      const ip = await obtenerDireccionIP();
-      datosFormulario.append('ip', ip);
-    } catch (_error) {
-      datosFormulario.append('ip', 'No disponible');
+    if (!urlDestino || !urlDestino.includes('script.google.com')) {
+      mostrarEstado(elementoEstado, 'Falta configurar la URL de Google Apps Script.', 'error');
+      return;
     }
 
-    const urlDestino = config.confirmacion.urlGoogleAppsScript;
+    const boton = formulario.querySelector('button[type="submit"]');
+    boton.disabled = true;
+    boton.textContent = 'Enviando...';
+
+    const ahora = new Date();
+
+    const datos = new URLSearchParams();
+    datos.append('fecha', ahora.toLocaleDateString('es-MX'));
+    datos.append('hora', ahora.toLocaleTimeString('es-MX'));
+    datos.append('responsable', document.getElementById('form-responsable').value.trim());
+    datos.append('cantidad', document.getElementById('form-cantidad').value);
+    datos.append('persona1', document.getElementById('form-persona1').value.trim());
+    datos.append('persona2', document.getElementById('form-persona2').value.trim());
+    datos.append('persona3', document.getElementById('form-persona3').value.trim());
+    datos.append('persona4', document.getElementById('form-persona4').value.trim());
+    datos.append('comentarios', document.getElementById('form-comentarios').value.trim());
+    datos.append('ip', 'No disponible');
+    datos.append('userAgent', navigator.userAgent);
 
     try {
-      // 'no-cors' es intencional: ver la nota al inicio de este archivo.
-      await fetch(urlDestino, { method: 'POST', mode: 'no-cors', body: datosFormulario });
+      await fetch(urlDestino, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: datos
+      });
 
-      mostrarEstado(elementoEstado, `¡Gracias, ${datosFormulario.get('responsable')}! Tu asistencia fue registrada.`, 'exito');
-      if (window.InvitacionAnimaciones) window.InvitacionAnimaciones.lanzarConfetiExplosion();
+      mostrarEstado(elementoEstado, 'Confirmación enviada. Revisa Google Sheets.', 'exito');
 
-      setTimeout(() => {
-        window.location.href = 'gracias.html';
-      }, 1800);
+      if (window.InvitacionAnimaciones) {
+        window.InvitacionAnimaciones.lanzarConfetiExplosion();
+      }
+
+      formulario.reset();
+      actualizarCamposPersonas(1);
+      boton.disabled = false;
+      boton.textContent = 'Confirmar asistencia';
+
     } catch (error) {
-      console.error('[Invitación] Error al enviar la confirmación:', error);
-      mostrarEstado(elementoEstado, 'No se pudo enviar. Verifica tu conexión e intenta de nuevo.', 'error');
-      botonEnviar.disabled = false;
-      botonEnviar.textContent = 'Confirmar asistencia';
+      console.error(error);
+      mostrarEstado(elementoEstado, 'No se pudo enviar. Intenta otra vez.', 'error');
+      boton.disabled = false;
+      boton.textContent = 'Confirmar asistencia';
     }
   }
 
@@ -127,17 +124,6 @@ window.InvitacionFormulario = (function () {
     if (!elemento) return;
     elemento.textContent = mensaje;
     elemento.className = `formulario__estado visible formulario__estado--${tipo}`;
-  }
-
-  /** Obtiene la IP pública del visitante usando una API gratuita (opcional, con tiempo límite corto) */
-  function obtenerDireccionIP() {
-    const controlador = new AbortController();
-    const tiempoLimite = setTimeout(() => controlador.abort(), 2500);
-
-    return fetch('https://api.ipify.org?format=json', { signal: controlador.signal })
-      .then((respuesta) => respuesta.json())
-      .then((datos) => datos.ip)
-      .finally(() => clearTimeout(tiempoLimite));
   }
 
   return { iniciar };
