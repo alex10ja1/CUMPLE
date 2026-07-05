@@ -650,3 +650,10 @@ section { position: relative; padding: var(--espacio-xl) 0; }
 .gracias-pantalla__icono { width: 70px; height: 70px; color: var(--color-dorado); margin-bottom: var(--espacio-sm); }
 .gracias-pantalla__titulo { font-family: var(--fuente-script); font-size: clamp(2.2rem, 8vw, 3.2rem); color: var(--color-dorado-oscuro); }
 .gracias-pantalla__texto { max-width: 420px; color: var(--color-texto-suave); margin-top: var(--espacio-sm); }
+
+ .foto-principal {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
