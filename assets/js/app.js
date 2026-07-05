@@ -237,15 +237,11 @@ function ocultarPantallaCarga() {
   document.getElementById('pantalla-carga')?.classList.add('oculta');
 }
 
-/**
- * PWA OPCIONAL: registra sw.js para que el sitio pueda instalarse
- * como app y funcione parcialmente sin conexión. Si no quieres esta
- * función, simplemente borra esta llamada y el archivo sw.js; el
- * resto del sitio funciona exactamente igual sin ella.
- */
+// registrarServiceWorkerPWA();
+
 function registrarServiceWorkerPWA() {
   if (!('serviceWorker' in navigator)) return;
-  // Los service workers requieren HTTPS (GitHub Pages lo cumple) o localhost.
+
   navigator.serviceWorker.register('sw.js').catch((error) => {
     console.warn('[Invitación] No se pudo registrar el Service Worker (PWA):', error);
   });
