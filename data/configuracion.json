@@ -17,8 +17,8 @@
   },
 
   "lugar": {
-    "nombreLugar": "Salón Jardín Villa Dorada",
-    "direccion": "Av. de las Rosas 245, Col. Los Encinos, Ciudad",
+    "nombreLugar": "La ilusion",
+    "direccion": "Tlayacapan, Morelos",
     "latitud": 19.432608,
     "longitud": -99.133209,
     "urlGoogleMaps": "https://goo.gl/maps/SDNaFNUoHL57ZC1h8"
@@ -26,7 +26,7 @@
 
   "vestimenta": {
     "codigo": "Formal",
-    "detalle": "Paleta dorado, champagne y beige. Evitar blanco (color reservado para la festejada)."
+    "detalle": ""
   },
 
   "musica": {
