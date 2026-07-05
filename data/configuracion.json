@@ -4,6 +4,7 @@
   "evento": {
     "nombreFestejada": "Minerva Martinez Sarabia",
     "edad": "75",
+    "fotoPrincipal": "assets/img/foto-principal.jpg",
     "fraseElegante": "Setenta y cinco años de vida son setenta y cinco años de amor compartido. Acompáñanos a celebrar cada uno de ellos.",
     "mensajeFinal": "Cada momento a tu lado ha sido un regalo. Hoy queremos celebrarte a ti, tu historia y todo el amor que nos has dado. Gracias por ser la razón de esta fiesta."
   },
@@ -53,4 +54,6 @@
     { "src": "assets/img/galeria-05.jpg", "alt": "Foto 5 de la festejada" },
     { "src": "assets/img/galeria-06.jpg", "alt": "Foto 6 de la festejada" }
   ]
+  
 }
+
