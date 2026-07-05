@@ -18,14 +18,16 @@ window.InvitacionFormulario = (function () {
       actualizarCamposPersonas(parseInt(this.value, 10));
     });
 
-    formulario.addEventListener("submit", function (e) {
-      e.preventDefault();
+    formulario.addEventListener("submit", function (evento) {
+      evento.preventDefault();
       enviarFormulario(formulario, estado);
     });
   }
 
   function prepararSelectCantidad(select, maximo) {
+    if (!select) return;
     select.innerHTML = "";
+
     for (let i = 1; i <= maximo; i++) {
       const opcion = document.createElement("option");
       opcion.value = String(i);
@@ -62,26 +64,27 @@ window.InvitacionFormulario = (function () {
       return;
     }
 
+    const boton = formulario.querySelector('button[type="submit"]');
+    boton.disabled = true;
+    boton.textContent = "Enviando...";
+
     const ahora = new Date();
 
-    const params = new URLSearchParams({
+    const datos = {
       fecha: ahora.toLocaleDateString("es-MX"),
       hora: ahora.toLocaleTimeString("es-MX"),
-      responsable: responsable,
-      cantidad: cantidad,
-      persona1: persona1,
-      persona2: persona2,
-      persona3: persona3,
-      persona4: persona4,
-      comentarios: comentarios,
+      responsable,
+      cantidad,
+      persona1,
+      persona2,
+      persona3,
+      persona4,
+      comentarios,
       ip: "No disponible",
       userAgent: navigator.userAgent
-    });
+    };
 
-    const iframe = document.createElement("iframe");
-    iframe.style.display = "none";
-    iframe.src = URL_SCRIPT + "?" + params.toString();
-    document.body.appendChild(iframe);
+    enviarPorFormularioOculto(datos);
 
     mostrarEstado(estado, "Confirmación enviada correctamente.", "exito");
 
@@ -89,12 +92,47 @@ window.InvitacionFormulario = (function () {
       window.InvitacionAnimaciones.lanzarConfetiExplosion();
     }
 
-    formulario.reset();
-    actualizarCamposPersonas(1);
+    setTimeout(() => {
+      formulario.reset();
+      actualizarCamposPersonas(1);
+      boton.disabled = false;
+      boton.textContent = "Confirmar asistencia";
+      window.location.href = "gracias.html";
+    }, 2500);
+  }
+
+  function enviarPorFormularioOculto(datos) {
+    const iframeName = "iframe-google-sheets";
+
+    let iframe = document.getElementById(iframeName);
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.name = iframeName;
+      iframe.id = iframeName;
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    }
+
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = URL_SCRIPT;
+    form.target = iframeName;
+    form.style.display = "none";
+
+    Object.keys(datos).forEach((clave) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = clave;
+      input.value = datos[clave];
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+    form.submit();
 
     setTimeout(() => {
-      window.location.href = "gracias.html";
-    }, 1800);
+      form.remove();
+    }, 3000);
   }
 
   function mostrarEstado(elemento, mensaje, tipo) {
