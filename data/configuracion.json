@@ -2,7 +2,7 @@
   "_comentario": "Edita SOLO los valores (lo que está a la derecha de los dos puntos). No cambies los nombres de las llaves.",
 
   "evento": {
-    "nombreFestejada": "María Elena Rodríguez",
+    "nombreFestejada": "Minerva Martinez Sarabia",
     "edad": "75",
     "fraseElegante": "Setenta y cinco años de vida son setenta y cinco años de amor compartido. Acompáñanos a celebrar cada uno de ellos.",
     "mensajeFinal": "Cada momento a tu lado ha sido un regalo. Hoy queremos celebrarte a ti, tu historia y todo el amor que nos has dado. Gracias por ser la razón de esta fiesta."
@@ -20,7 +20,7 @@
     "direccion": "Av. de las Rosas 245, Col. Los Encinos, Ciudad",
     "latitud": 19.432608,
     "longitud": -99.133209,
-    "urlGoogleMaps": "https://www.google.com/maps/search/?api=1&query=19.432608,-99.133209"
+    "urlGoogleMaps": "https://goo.gl/maps/SDNaFNUoHL57ZC1h8"
   },
 
   "vestimenta": {
@@ -34,15 +34,15 @@
   },
 
   "confirmacion": {
-    "urlGoogleAppsScript": "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT_DESPLEGADO",
+    "urlGoogleAppsScript": "https://script.google.com/macros/s/AKfycbyb66U0b0urGT-Wlq7SMbKlRbJjsZ4HoOBeosrrRLgip8Z5JeLuOO0JxdyyBdLxxA/exec",
     "maximoPersonas": 4,
     "whatsappResponsable": "521234567890"
   },
 
   "compartir": {
-    "urlSitio": "https://tu-usuario.github.io/InvitacionDigital/",
-    "tituloCompartir": "Invitación: 75 años de María Elena",
-    "textoWhatsapp": "¡Estás invitado(a) a celebrar los 75 años de María Elena! Aquí está la invitación digital:"
+    "urlSitio": "https://alex10ja1.github.io/CUMPLE/",
+    "tituloCompartir": "Invitación: 75 años de Minerva Sarabia Martinez ",
+    "textoWhatsapp": "¡Estás invitado(a) a celebrar los 75 años de Minerva Martinez Aquí está la invitación digital:"
   },
 
   "galeria": [
