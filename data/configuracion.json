@@ -1,0 +1,56 @@
+{
+  "_comentario": "Edita SOLO los valores (lo que está a la derecha de los dos puntos). No cambies los nombres de las llaves.",
+
+  "evento": {
+    "nombreFestejada": "María Elena Rodríguez",
+    "edad": "75",
+    "fraseElegante": "Setenta y cinco años de vida son setenta y cinco años de amor compartido. Acompáñanos a celebrar cada uno de ellos.",
+    "mensajeFinal": "Cada momento a tu lado ha sido un regalo. Hoy queremos celebrarte a ti, tu historia y todo el amor que nos has dado. Gracias por ser la razón de esta fiesta."
+  },
+
+  "fechaHora": {
+    "fechaISO": "2026-11-14T19:00:00",
+    "fechaTexto": "Sábado 14 de Noviembre, 2026",
+    "horaTexto": "7:00 de la noche",
+    "notaHora": "Se ruega puntualidad"
+  },
+
+  "lugar": {
+    "nombreLugar": "Salón Jardín Villa Dorada",
+    "direccion": "Av. de las Rosas 245, Col. Los Encinos, Ciudad",
+    "latitud": 19.432608,
+    "longitud": -99.133209,
+    "urlGoogleMaps": "https://www.google.com/maps/search/?api=1&query=19.432608,-99.133209"
+  },
+
+  "vestimenta": {
+    "codigo": "Formal",
+    "detalle": "Paleta dorado, champagne y beige. Evitar blanco (color reservado para la festejada)."
+  },
+
+  "musica": {
+    "archivo": "assets/audio/musica-fondo.mp3",
+    "titulo": "Melodía de fondo"
+  },
+
+  "confirmacion": {
+    "urlGoogleAppsScript": "PEGA_AQUI_LA_URL_DE_TU_APPS_SCRIPT_DESPLEGADO",
+    "maximoPersonas": 4,
+    "whatsappResponsable": "521234567890"
+  },
+
+  "compartir": {
+    "urlSitio": "https://tu-usuario.github.io/InvitacionDigital/",
+    "tituloCompartir": "Invitación: 75 años de María Elena",
+    "textoWhatsapp": "¡Estás invitado(a) a celebrar los 75 años de María Elena! Aquí está la invitación digital:"
+  },
+
+  "galeria": [
+    { "src": "assets/img/galeria-01.jpg", "alt": "Foto 1 de la festejada" },
+    { "src": "assets/img/galeria-02.jpg", "alt": "Foto 2 de la festejada" },
+    { "src": "assets/img/galeria-03.jpg", "alt": "Foto 3 de la festejada" },
+    { "src": "assets/img/galeria-04.jpg", "alt": "Foto 4 de la festejada" },
+    { "src": "assets/img/galeria-05.jpg", "alt": "Foto 5 de la festejada" },
+    { "src": "assets/img/galeria-06.jpg", "alt": "Foto 6 de la festejada" }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Invitación Digital · 75 Años",
+  "short_name": "Invitación 75",
+  "description": "Invitación digital premium para el cumpleaños de 75 años.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FBF6EC",
+  "theme_color": "#C6A15B",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/iconos/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
