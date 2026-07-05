@@ -17,11 +17,12 @@
   },
 
   "lugar": {
-    "nombreLugar": "La ilusion",
-    "direccion": "Tlayacapan, Morelos",
-    "latitud": 19.432608,
-    "longitud": -99.133209,
-    "urlGoogleMaps": "https://goo.gl/maps/SDNaFNUoHL57ZC1h8"
+  "nombreLugar": "La Ilusión",
+  "direccion": "Tlayacapan, Morelos",
+  "latitud": 18.928978,
+  "longitud": -98.951653,
+  "urlGoogleMaps": "https://www.google.com/maps?q=18.928978,-98.951653"
+
   },
 
   "vestimenta": {
